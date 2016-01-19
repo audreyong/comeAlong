@@ -1,0 +1,12 @@
+<div>
+<div id='diningHallList'>
+  {% for diningHall in diningHalls %}
+    <div>{{ diningHall.name }}
+      <span>{{ diningHall.votes }}</span>
+    </div>
+  {% endfor %}
+</div>
+<div>
+  <button class='button' id='notify'>Notify</button>
+</div>
+</div>

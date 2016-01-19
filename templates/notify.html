@@ -1,0 +1,10 @@
+<div>
+<div id='friendsList'>
+  {% for friend in friendsList %}
+    <div>
+      <label for='select'>{{ friend.name }}</label>
+      <span><input type='checkbox' name='select'></span>
+    </div>
+  {% endfor %}
+</div>
+</div>

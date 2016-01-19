@@ -1,0 +1,35 @@
+<!-- <div id='friendsGoingList'>
+  <div id='friendsGoing'>
+    <div>Sidnie</div>
+    <div>Riccardo</div>
+  </div>
+  <div>
+    <button type='submit' name='notifyButton'>Notify</button>
+
+    <button type='submit' name='sendButton'>SEND</button>
+  </div>
+</div> -->
+
+<div>
+  <div class='view' id='diningHallList'>
+    {% for diningHall in diningHalls %}
+      <div data-diningname='{{ diningHall.name }}' class='clickableDiningHalls'>{{ diningHall.name }}
+        <span>{{ diningHall.votes }}</span>
+      </div>
+    {% endfor %}
+  </div>
+
+  <button type='submit' id='back' name='backButton'>Back</button>
+
+  <div class='view' id='friendsList'>
+    {% for friend in friendsList %}
+      <div >
+        <label for='select'>{{ friend.name }}</label>
+        <span><input class='friendCheckBox' data-friendname='{{ friend.name }}' type='checkbox' name='select'></span>
+      </div>
+    {% endfor %}
+  </div>
+
+  <button type='submit' id='sendToFriends' name='sendButton'>SEND</button>
+
+</div>
