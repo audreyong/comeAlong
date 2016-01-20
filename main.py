@@ -19,6 +19,7 @@ import jinja2
 import os
 import logging
 from google.appengine.ext import ndb
+import comealong_datastore as data_comealong
 
 JINJA_ENVIRONMENT = jinja2.Environment (
     loader = jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -44,15 +45,34 @@ friendsList = [
 ]
 
 class SendHandler(webapp2.RequestHandler):
-    def get(self):
-        self.redirect('/')
+    def post(self):
+        pass
+        # data = JSON.loads(self.request.body)
+        # listofFriends = data['listofFriends']
+        # diningHallSelected = self.request.get('diningHallSelected')
+        # dateSelected = self.request.get('dateSelected')
+        # timeSelected = self.request.get('timeSelected')
+        #
+        # print(listofFriends)
+        # print(diningHallSelected)
+        # print(dateSelected)
+        # print(timeSelected)
 
-class NotifyHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write(header_template.render())
-        friendsListTemplate = JINJA_ENVIRONMENT.get_template('templates/notify.html')
-        self.response.write(friendsListTemplate.render({'friendsList': friendsList}))
-        self.response.write(footer_template.render())
+
+        # new_entry = data_comealong.Notify(
+        #     listofFriends = listofFriends,
+        #     diningHallSelected = diningHallSelected,
+        #     dateSelected = dateSelected,
+        #     timeSelected = timeSelected,
+        # )
+        # new_entry.put()
+
+# class NotifyHandler(webapp2.RequestHandler):
+#     def get(self):
+#         self.response.write(header_template.render())
+#         friendsListTemplate = JINJA_ENVIRONMENT.get_template('templates/notify.html')
+#         self.response.write(friendsListTemplate.render({'friendsList': friendsList}))
+#         self.response.write(footer_template.render())
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -64,6 +84,6 @@ class MainHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/notify', NotifyHandler),
+    #('/notify', NotifyHandler),
     ('/send', SendHandler),
 ], debug=True)
