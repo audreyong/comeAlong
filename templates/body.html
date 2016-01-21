@@ -21,6 +21,13 @@
 
   <button type='submit' id='back' name='backButton'>Back</button>
 
+  <div class='view' id='dateAndTime'>
+    <div >
+      <p>Date: <input type="text" id="datepicker"></p>
+      <p>Time: <input id="basicExample" type="text" class="time"></p>
+    </div>
+  </div>
+  
   <div class='view' id='friendsList'>
     {% for friend in friendsList %}
       <div >
@@ -30,12 +37,7 @@
     {% endfor %}
   </div>
 
-  <div class='view' id='dateAndTime'>
-    <div >
-      <p>Date: <input type="text" id="datepicker"></p>
-      <p>Time: <input id="basicExample" type="text" class="time"></p>
-    </div>
-  </div>
+
 
   <button type='submit' id='sendToFriends' name='sendButton'>SEND</button>
 

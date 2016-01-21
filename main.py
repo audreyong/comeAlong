@@ -19,7 +19,16 @@ import jinja2
 import os
 import logging
 from google.appengine.ext import ndb
+from google.appengine.api import users
 import comealong_datastore as data_comealong
+import user_datastore as data_user
+import json
+import datetime
+
+# import gdata.contacts.data
+# import gdata.contacts.client
+
+# self.gd_client = gdata.contacts.client.ContactsClient(source='smith-jterm-test-audrey')
 
 JINJA_ENVIRONMENT = jinja2.Environment (
     loader = jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -44,28 +53,31 @@ friendsList = [
     {'name': 'Audrey'},
 ]
 
+tempUsername = "The boss"
+
 class SendHandler(webapp2.RequestHandler):
     def post(self):
-        pass
-        # data = JSON.loads(self.request.body)
-        # listofFriends = data['listofFriends']
-        # diningHallSelected = self.request.get('diningHallSelected')
-        # dateSelected = self.request.get('dateSelected')
-        # timeSelected = self.request.get('timeSelected')
-        #
-        # print(listofFriends)
-        # print(diningHallSelected)
-        # print(dateSelected)
-        # print(timeSelected)
+        userID = users.get_current_user()._user_id
+        data = json.loads(self.request.body)
+        sender = tempUsername
+        listofReceiversID = data['listofFriends'] #change this later
+        diningHallSelected = data['diningHallSelected']
+        stringDateSelected = data['dateSelected']
+        stringTimeSelected = data['timeSelected']
 
 
-        # new_entry = data_comealong.Notify(
-        #     listofFriends = listofFriends,
-        #     diningHallSelected = diningHallSelected,
-        #     dateSelected = dateSelected,
-        #     timeSelected = timeSelected,
-        # )
-        # new_entry.put()
+        dateSelected = datetime.datetime.strptime(stringDateSelected, '%m/%d/%Y').date()
+        timeSelected = datetime.datetime.strptime(stringTimeSelected, '%H:%M%p').time()
+
+        new_entry = data_comealong.Notification(
+            senderID = userID,
+            listofReceiversID = listofReceiversID,
+            diningHallSelected = diningHallSelected,
+            dateSelected = dateSelected,
+            timeSelected = timeSelected,
+        )
+        new_entry.put()
+
 
 # class NotifyHandler(webapp2.RequestHandler):
 #     def get(self):
@@ -76,14 +88,28 @@ class SendHandler(webapp2.RequestHandler):
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write(header_template.render())
-        bodyTemplate = JINJA_ENVIRONMENT.get_template('templates/body.html')
-        self.response.write(bodyTemplate.render({'diningHalls': diningHalls, 'friendsList': friendsList}))
-        self.response.write(footer_template.render())
+        user = users.get_current_user().user_id
 
+        # 173038463819-kfdrevei3tn96onbqdgo3qqmm5iqi546.apps.googleusercontent.com
+
+
+
+        if user:
+            self.response.write(header_template.render())
+            bodyTemplate = JINJA_ENVIRONMENT.get_template('templates/body.html')
+            self.response.write(bodyTemplate.render({'diningHalls': diningHalls, 'friendsList': friendsList}))
+            self.response.write('<button href="%s">LOGOUT</button>' % users.create_logout_url('/'))
+            self.response.write(footer_template.render())
+        else:
+            self.redirect(users.create_login_url('/'))
+
+class TestHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write(feed = gd_client.GetContacts())
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     #('/notify', NotifyHandler),
     ('/send', SendHandler),
+    ('/test', TestHandler),
 ], debug=True)

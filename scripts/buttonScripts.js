@@ -39,7 +39,7 @@ $(document).ready(function() {
               'listofFriends': listofFriends,
               'dateSelected': dateSelected,
               'timeSelected': timeSelected,
-            })
+            }),
       dataType: 'json',
       contentType: "application/json",
 
