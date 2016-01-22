@@ -8,16 +8,29 @@ $(document).ready(function() {
     window.location = '/notify';
   });
 
+  //hide date and time and friends list div
+   $("#dateAndTime").hide();
+   $("#friendsList").hide();
+
   $(".clickableDiningHalls").click(function(e) {
     diningHallSelected = $(e.currentTarget).data('diningname');
+     $("#diningHallList").hide();//hide the dining div
+      $("#dateAndTime").show();
   });
 
+//date and timepicker classes through jQuery UI
   $(function() {
     $( "#datepicker" ).datepicker();
   });
 
   $(function() {
     $('#basicExample').timepicker();
+  });
+
+// hide date and time picker
+  $("#nextFromDateAndTime").click(function(e) {
+     $("#dateAndTime").hide();
+     $("#friendsList").show();
   });
 
   $("#sendToFriends").click(function(e) {
@@ -46,6 +59,7 @@ $(document).ready(function() {
           }).done(function(data) {
 //
             });
+    //$("#friendsList").hide( "fade", { direction: "down" }, "fast" );
   });
 
 

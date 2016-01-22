@@ -57,7 +57,7 @@ tempUsername = "The boss"
 
 class SendHandler(webapp2.RequestHandler):
     def post(self):
-        userID = users.get_current_user()._user_id
+        userID = users.get_current_user()
         data = json.loads(self.request.body)
         sender = tempUsername
         listofReceiversID = data['listofFriends'] #change this later
@@ -88,12 +88,8 @@ class SendHandler(webapp2.RequestHandler):
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        user = users.get_current_user().user_id
-
+        user = users.get_current_user()
         # 173038463819-kfdrevei3tn96onbqdgo3qqmm5iqi546.apps.googleusercontent.com
-
-
-
         if user:
             self.response.write(header_template.render())
             bodyTemplate = JINJA_ENVIRONMENT.get_template('templates/body.html')
@@ -103,13 +99,10 @@ class MainHandler(webapp2.RequestHandler):
         else:
             self.redirect(users.create_login_url('/'))
 
-class TestHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write(feed = gd_client.GetContacts())
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     #('/notify', NotifyHandler),
     ('/send', SendHandler),
-    ('/test', TestHandler),
 ], debug=True)

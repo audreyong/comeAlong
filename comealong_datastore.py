@@ -8,10 +8,3 @@ class Notification(ndb.Model):
     diningHallSelected = ndb.StringProperty()
     dateSelected = ndb.DateProperty()
     timeSelected = ndb.TimeProperty()
-
-    # username = ndb.StringProperty()
-    # listofFriends = ndb.StringProperty(repeated=True)
-    # listofFriendsNotified = ndb.StringProperty(repeated=True)
-    # diningHallSelected = ndb.StringProperty()
-    # dateSelected = ndb.StringProperty() # can change the property to datetime
-    # timeSelected = ndb.StringProperty()
