@@ -1,15 +1,3 @@
-<!-- <div id='friendsGoingList'>
-  <div id='friendsGoing'>
-    <div>Sidnie</div>
-    <div>Riccardo</div>
-  </div>
-  <div>
-    <button type='submit' name='notifyButton'>Notify</button>
-
-    <button type='submit' name='sendButton'>SEND</button>
-  </div>
-</div> -->
-
 <div>
   <button type='submit' id='addFriends' name='addFriendsButton'>Back</button>
   <div class='view' id='diningHallList'>
@@ -18,32 +6,33 @@
         <span>{{ diningHall.votes }}</span>
       </div>
     {% endfor %}
-  </div>
 
-  <button type='submit' id='back' name='backButton'>Back</button>
+  </div>
 
   <div class='view' id='dateAndTime'>
     <div >
       <p>Date: <input type="text" id="datepicker"></p>
       <p>Time: <input id="basicExample" type="text" class="time"></p>
     </div>
+    <div id="nextAndBack">
+      <span>
+      <button  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id='back' name='backButton'>Back</button>
+      <button  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id='nextFromDateAndTime' name='nextFromDateAndTime'>Next</button></span>
+    </div>
   </div>
-
-  <button type='submit' id='next' name='nextButton'>Next</button>
-
-  <button type='submit' id='back' name='backButton'>Back</button>
 
   <div class='view' id='friendsList'>
     {% for friend in friendsList %}
       <div >
-        <label for='select'>{{ friend.name }}</label>
-        <span><input class='friendCheckBox' data-friendname='{{ friend.name }}' type='checkbox' name='select'></span>
+        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for='{{ friend.name }}'>
+            <input  type="checkbox" data-friendname='{{ friend.name }}' id='{{ friend.name }}' class="mdl-checkbox__input">
+            <span class="mdl-checkbox__label">{{ friend.name }}</span>
+        </label><br><br>
+
+
       </div>
     {% endfor %}
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type='submit' id='sendToFriends' name='sendButton'>SEND</button>
   </div>
-
-
-
-  <button type='submit' id='sendToFriends' name='sendButton'>SEND</button>
 
 </div>

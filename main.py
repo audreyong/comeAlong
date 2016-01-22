@@ -89,6 +89,7 @@ class SendHandler(webapp2.RequestHandler):
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
+
         user = users.get_current_user().email()
         print user
         if user:
@@ -112,13 +113,10 @@ class MainHandler(webapp2.RequestHandler):
         else:
             self.redirect(users.create_login_url('/'))
 
-class TestHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write(feed = gd_client.GetContacts())
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     #('/notify', NotifyHandler),
     ('/send', SendHandler),
-    ('/test', TestHandler),
 ], debug=True)
