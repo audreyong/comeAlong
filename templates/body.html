@@ -11,6 +11,7 @@
 </div> -->
 
 <div>
+  <button type='submit' id='addFriends' name='addFriendsButton'>Back</button>
   <div class='view' id='diningHallList'>
     {% for diningHall in diningHalls %}
       <div data-diningname='{{ diningHall.name }}' class='clickableDiningHalls'>{{ diningHall.name }}
@@ -27,7 +28,11 @@
       <p>Time: <input id="basicExample" type="text" class="time"></p>
     </div>
   </div>
-  
+
+  <button type='submit' id='next' name='nextButton'>Next</button>
+
+  <button type='submit' id='back' name='backButton'>Back</button>
+
   <div class='view' id='friendsList'>
     {% for friend in friendsList %}
       <div >

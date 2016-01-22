@@ -20,8 +20,9 @@ import os
 import logging
 from google.appengine.ext import ndb
 from google.appengine.api import users
-import comealong_datastore as data_comealong
-import user_datastore as data_user
+import models as models
+# import comealong_datastore as data_comealong
+# import user_datastore as data_user
 import json
 import datetime
 
@@ -57,19 +58,19 @@ tempUsername = "The boss"
 
 class SendHandler(webapp2.RequestHandler):
     def post(self):
-        userID = users.get_current_user()._user_id
+        userID = users.get_current_user()
         data = json.loads(self.request.body)
         sender = tempUsername
         listofReceiversID = data['listofFriends'] #change this later
         diningHallSelected = data['diningHallSelected']
         stringDateSelected = data['dateSelected']
         stringTimeSelected = data['timeSelected']
-
+        print ("userID" + userID)
 
         dateSelected = datetime.datetime.strptime(stringDateSelected, '%m/%d/%Y').date()
         timeSelected = datetime.datetime.strptime(stringTimeSelected, '%H:%M%p').time()
 
-        new_entry = data_comealong.Notification(
+        new_entry = models.Notification(
             senderID = userID,
             listofReceiversID = listofReceiversID,
             diningHallSelected = diningHallSelected,
@@ -88,18 +89,26 @@ class SendHandler(webapp2.RequestHandler):
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        user = users.get_current_user().user_id
-
-        # 173038463819-kfdrevei3tn96onbqdgo3qqmm5iqi546.apps.googleusercontent.com
-
-
-
+        user = users.get_current_user().email()
+        print user
         if user:
-            self.response.write(header_template.render())
-            bodyTemplate = JINJA_ENVIRONMENT.get_template('templates/body.html')
-            self.response.write(bodyTemplate.render({'diningHalls': diningHalls, 'friendsList': friendsList}))
-            self.response.write('<button href="%s">LOGOUT</button>' % users.create_logout_url('/'))
-            self.response.write(footer_template.render())
+            checkIfUserExists = ndb.Key(models.User, user)
+            if checkIfUserExists:
+                self.response.write(header_template.render())
+                bodyTemplate = JINJA_ENVIRONMENT.get_template('templates/body.html')
+                self.response.write(bodyTemplate.render({'diningHalls': diningHalls, 'friendsList': friendsList}))
+                self.response.write('<button href="%s">LOGOUT</button>' % users.create_logout_url('/'))
+                self.response.write(footer_template.render())
+            else:
+                new_user = models.User(
+                    username = user
+                )
+                new_user.put()
+                self.response.write(header_template.render())
+                bodyTemplate = JINJA_ENVIRONMENT.get_template('templates/body.html')
+                self.response.write(bodyTemplate.render({'diningHalls': diningHalls, 'friendsList': friendsList}))
+                self.response.write('<button href="%s">LOGOUT</button>' % users.create_logout_url('/'))
+                self.response.write(footer_template.render())
         else:
             self.redirect(users.create_login_url('/'))
 

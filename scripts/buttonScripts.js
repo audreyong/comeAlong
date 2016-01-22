@@ -20,6 +20,10 @@ $(document).ready(function() {
     $('#basicExample').timepicker();
   });
 
+  $("#addFriends").click(function(e) {
+    window.location.replace('/addFriends');
+  });
+
   $("#sendToFriends").click(function(e) {
     listofFriends = [];
     var allFriendslist = $('.friendCheckBox');
