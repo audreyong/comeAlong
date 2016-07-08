@@ -1,12 +1,14 @@
-<div>
-  <button type='submit' id='addFriends' name='addFriendsButton'>Back</button>
-  <div class='view' id='diningHallList'>
-    {% for diningHall in diningHalls %}
-      <div data-diningname='{{ diningHall.name }}' class='clickableDiningHalls'>{{ diningHall.name }}
-        <span>{{ diningHall.votes }}</span>
-      </div>
-    {% endfor %}
 
+<!-- Second view : Dining Hall Selection List -->
+<div id="allElementsShownAndHidden">
+  <div class='view' id='diningHallList'>
+    <ul class="list-group">
+      {% for diningHall in diningHalls %}
+        <li data-diningname='{{ diningHall.name }}' class='clickableDiningHalls list-group-item'> {{ diningHall.name }}
+          <span class="badge">{{ diningHall.votes }}</span>
+        </li>
+      {% endfor %}
+    </ul>
   </div>
 
   <div class='view' id='dateAndTime'>
@@ -16,23 +18,24 @@
     </div>
     <div id="nextAndBack">
       <span>
-      <button  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id='back' name='backButton'>Back</button>
-      <button  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id='nextFromDateAndTime' name='nextFromDateAndTime'>Next</button></span>
+      <button  class="btn btn-primary" id='back' name='backButton'>Back</button>
+      <button  class="btn btn-primary" id='nextFromDateAndTime' name='nextFromDateAndTime'>Next</button></span>
     </div>
   </div>
 
-  <div class='view' id='friendsList'>
-    {% for friend in friendsList %}
-      <div >
-        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for='{{ friend.name }}'>
-            <input  type="checkbox" data-friendname='{{ friend.name }}' id='{{ friend.name }}' class="mdl-checkbox__input">
-            <span class="mdl-checkbox__label">{{ friend.name }}</span>
-        </label><br><br>
+  <form method= "post" action="/send">
+    <div class='view' id='friendsList'>
+      {% for friend in friendsList %}
+        <div >
+          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for='{{ friend.name }}'>
+              <input  type="checkbox" data-friendname='{{ friend.name }}' id='{{ friend.name }}' class="mdl-checkbox__input selectFriendsCheckbox">
+              <span class="mdl-checkbox__label">{{ friend.name }}</span>
+          </label><br><br>
 
-
-      </div>
-    {% endfor %}
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type='submit' id='sendToFriends' name='sendButton'>SEND</button>
-  </div>
+        </div>
+      {% endfor %}
+      <button class="btn btn-primary" type='submit' id='sendToFriends' name='sendButton'>SEND</button>
+    </div>
+</form>
 
 </div>

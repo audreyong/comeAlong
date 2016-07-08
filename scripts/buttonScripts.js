@@ -29,6 +29,7 @@ $(document).ready(function() {
 
   $("#addFriends").click(function(e) {
     window.location.replace('/addFriends');
+  });
 
 // hide date and time picker
   $("#nextFromDateAndTime").click(function(e) {

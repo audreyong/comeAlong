@@ -42,11 +42,11 @@ footer_template = JINJA_ENVIRONMENT.get_template('templates/footer.html')
 
 diningHalls = [
     {'name': 'Tyler',
-    'votes': 0},
+    'votes': 5},
     {'name': 'Cutter-Ziskind',
-    'votes': 0},
+    'votes': 4},
     {'name': 'Chapin',
-    'votes': 0},
+    'votes': 3},
 ]
 
 friendsList = [
@@ -58,26 +58,27 @@ tempUsername = "The boss"
 
 class SendHandler(webapp2.RequestHandler):
     def post(self):
-        userID = users.get_current_user()
-        data = json.loads(self.request.body)
-        sender = tempUsername
-        listofReceiversID = data['listofFriends'] #change this later
-        diningHallSelected = data['diningHallSelected']
-        stringDateSelected = data['dateSelected']
-        stringTimeSelected = data['timeSelected']
-        print ("userID" + userID)
+        self.redirect("/")
+        # userID = users.get_current_user()
+        # data = json.loads(self.request.body)
+        # sender = tempUsername
+        # listofReceiversID = data['listofFriends'] #change this later
+        # diningHallSelected = data['diningHallSelected']
+        # stringDateSelected = data['dateSelected']
+        # stringTimeSelected = data['timeSelected']
+        # print ("userID" + userID)
 
-        dateSelected = datetime.datetime.strptime(stringDateSelected, '%m/%d/%Y').date()
-        timeSelected = datetime.datetime.strptime(stringTimeSelected, '%H:%M%p').time()
+        # dateSelected = datetime.datetime.strptime(stringDateSelected, '%m/%d/%Y').date()
+        # timeSelected = datetime.datetime.strptime(stringTimeSelected, '%H:%M%p').time()
 
-        new_entry = models.Notification(
-            senderID = userID,
-            listofReceiversID = listofReceiversID,
-            diningHallSelected = diningHallSelected,
-            dateSelected = dateSelected,
-            timeSelected = timeSelected,
-        )
-        new_entry.put()
+        # new_entry = models.Notification(
+        #     senderID = userID,
+        #     listofReceiversID = listofReceiversID,
+        #     diningHallSelected = diningHallSelected,
+        #     dateSelected = dateSelected,
+        #     timeSelected = timeSelected,
+        # )
+        # new_entry.put()
 
 
 # class NotifyHandler(webapp2.RequestHandler):
@@ -90,15 +91,15 @@ class SendHandler(webapp2.RequestHandler):
 class MainHandler(webapp2.RequestHandler):
     def get(self):
 
-        user = users.get_current_user().email()
-        print user
+        user = users.get_current_user();
         if user:
-            checkIfUserExists = ndb.Key(models.User, user)
+            userEmail=user.email()
+            checkIfUserExists = ndb.Key(models.User, userEmail)
             if checkIfUserExists:
                 self.response.write(header_template.render())
                 bodyTemplate = JINJA_ENVIRONMENT.get_template('templates/body.html')
                 self.response.write(bodyTemplate.render({'diningHalls': diningHalls, 'friendsList': friendsList}))
-                self.response.write('<button href="%s">LOGOUT</button>' % users.create_logout_url('/'))
+                self.response.write('<a href="%s">LOGOUT</a>' % users.create_logout_url('/'))
                 self.response.write(footer_template.render())
             else:
                 new_user = models.User(
@@ -108,7 +109,7 @@ class MainHandler(webapp2.RequestHandler):
                 self.response.write(header_template.render())
                 bodyTemplate = JINJA_ENVIRONMENT.get_template('templates/body.html')
                 self.response.write(bodyTemplate.render({'diningHalls': diningHalls, 'friendsList': friendsList}))
-                self.response.write('<button href="%s">LOGOUT</button>' % users.create_logout_url('/'))
+                self.response.write('<a href="%s">LOGOUT</a>' % users.create_logout_url('/'))
                 self.response.write(footer_template.render())
         else:
             self.redirect(users.create_login_url('/'))

@@ -1,8 +1,53 @@
+body{
+	color: #004d00; font-size: 40px; font-family: 'Signika', sans-serif; padding-bottom: 20px; 
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+#allElementsShownAndHidden{
+	
+}
+
+.label{
+	display: block;
+	line-height: 2;
+	font-size: 90%;
+}
+
+.label .label-warning{
+	text-align: center;
+	background-color: #ffb31a;
+	width: 90%;
+	margin-top: 2%;
+}
+
 .view {
   border-style: solid;
-  padding: 10%;
+  padding: 5%;
+
 }
 
 .clickableDiningHalls:hover{
-  color: red;
+  color: blue;
+}
+
+.btn {
+	width:35%;
+}
+
+#nextAndBack{
+	margin-right: 35%;
+	margin-left: 35%;
+
+}
+
+#basicExample, #datepicker{
+	width: 80%;
+}
+.selectFriendsCheckbox{
+	transform: scale(3);
+    -ms-transform: scale(3);
+    -webkit-transform: scale(3);
+    padding: 10px;
+
 }
